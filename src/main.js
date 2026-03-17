@@ -43,7 +43,12 @@ form.addEventListener('submit', e => {
       createGallery(data.hits);
     })
     .catch(error => {
-      console.log('Error:', error);
+      iziToast.error({
+        title: 'Error',
+        message: `Something went wrong: ${error.message}`,
+        position: 'topRight',
+      });
+      console.log('Error details:', error);
     })
     .finally(() => {
       hideLoader();
