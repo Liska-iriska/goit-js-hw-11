@@ -1,4 +1,15 @@
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+// import 'css-loader/dist/loader.css';
+
+let lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 const gallery = document.querySelector('.gallery');
+const loader = document.querySelector('#loader');
 
 function createImg(img) {
   return `
@@ -30,12 +41,18 @@ function createImg(img) {
 export function createGallery(images) {
   const markup = images.map(img => createImg(img)).join('');
   gallery.innerHTML = markup;
+
+  lightbox.refresh();
 }
 
 export function clearGallery() {
   gallery.innerHTML = '';
 }
 
-// function showLoader() {}
+export function showLoader() {
+  loader.classList.add('is-active');
+}
 
-// hideLoader(){}
+export function hideLoader() {
+  loader.classList.remove('is-active');
+}

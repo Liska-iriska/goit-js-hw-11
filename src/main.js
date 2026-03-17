@@ -1,12 +1,18 @@
 import { getImagesByQuery } from './js/pixabay-api.js';
-import { createGallery, clearGallery } from './js/render-functions.js';
-const gallery = document.querySelector('.gallery');
+import {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+} from './js/render-functions.js';
 
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+// import 'css-loader/dist/loader.css';
+
+const gallery = document.querySelector('.gallery');
 const form = document.querySelector('.form');
-// const input = document.querySelector('input[name="search-text"]');
 
 form.addEventListener('submit', e => {
   e.preventDefault();
@@ -22,6 +28,7 @@ form.addEventListener('submit', e => {
   }
 
   clearGallery();
+  showLoader();
 
   getImagesByQuery(query)
     .then(data => {
@@ -37,7 +44,9 @@ form.addEventListener('submit', e => {
     })
     .catch(error => {
       console.log('Error:', error);
+    })
+    .finally(() => {
+      hideLoader();
+      form.reset();
     });
-
-  form.reset();
 });
