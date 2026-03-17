@@ -1,4 +1,7 @@
 import { getImagesByQuery } from './js/pixabay-api.js';
+import { createGallery, clearGallery } from './js/render-functions.js';
+const gallery = document.querySelector('.gallery');
+
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
@@ -18,6 +21,8 @@ form.addEventListener('submit', e => {
     return;
   }
 
+  clearGallery();
+
   getImagesByQuery(query)
     .then(data => {
       if (data.hits.length === 0) {
@@ -28,6 +33,7 @@ form.addEventListener('submit', e => {
         });
         return;
       }
+      createGallery(data.hits);
     })
     .catch(error => {
       console.log('Error:', error);
